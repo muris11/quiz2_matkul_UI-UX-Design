@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import HomePage from "@/app/page";
@@ -13,6 +13,16 @@ describe("site pages", () => {
     expect(screen.getByRole("heading", { name: /ui\/ux design praktikum 8-12/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /buka materi/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /kerjakan latihan/i })).toBeInTheDocument();
+  });
+
+  it("opens the mobile navigation menu", () => {
+    render(<HomePage />);
+
+    const toggleButton = screen.getByRole("button", { name: /toggle navigation menu/i });
+    fireEvent.click(toggleButton);
+
+    expect(screen.getAllByRole("link", { name: /materi/i }).length).toBeGreaterThan(0);
+    expect(toggleButton).toHaveAttribute("aria-expanded", "true");
   });
 
   it("renders the materi page with practical sections", () => {
