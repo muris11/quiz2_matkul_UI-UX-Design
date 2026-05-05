@@ -13,6 +13,17 @@ export type EssayQuestion = {
   prompt: string;
 };
 
+export type MateriSubsection = {
+  title: string;
+  paragraphs: string[];
+};
+
+export type MateriDetailedSection = {
+  title: string;
+  intro: string[];
+  subsections: MateriSubsection[];
+};
+
 export function readProjectMarkdown(fileName: string) {
   const filePath = path.join(process.cwd(), fileName);
   return fs.readFileSync(filePath, "utf8");
@@ -30,6 +41,55 @@ export function extractSections(markdown: string) {
       title: match[1].trim(),
       content,
     };
+  });
+}
+
+export function extractDetailedMateriSections(markdown: string) {
+  const sections = extractSections(markdown);
+
+  return sections.map((section) => {
+    const lines = section.content.split("\n");
+    const subsections: MateriSubsection[] = [];
+    let currentSubsection: MateriSubsection | null = null;
+    const intro: string[] = [];
+
+    for (const rawLine of lines.slice(1)) {
+      const line = rawLine.trim();
+
+      if (!line || line === "---") {
+        continue;
+      }
+
+      if (line.startsWith("## ")) {
+        if (currentSubsection) {
+          subsections.push(currentSubsection);
+        }
+
+        currentSubsection = {
+          title: line.replace(/^##\s+/, "").trim(),
+          paragraphs: [],
+        };
+        continue;
+      }
+
+      const normalizedLine = line.replace(/^\*\*(.*?)\*\*$/, "$1");
+
+      if (currentSubsection) {
+        currentSubsection.paragraphs.push(normalizedLine);
+      } else {
+        intro.push(normalizedLine);
+      }
+    }
+
+    if (currentSubsection) {
+      subsections.push(currentSubsection);
+    }
+
+    return {
+      title: section.title,
+      intro,
+      subsections,
+    } satisfies MateriDetailedSection;
   });
 }
 

@@ -1,6 +1,7 @@
 import { SiteShell } from "@/components/site-shell";
 import {
   curatedMateriTopics,
+  detailedMateriSections,
   materiApplicationExample,
   materiConclusion,
   materiOverview,
@@ -98,6 +99,21 @@ export default function MateriPage() {
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]">Takeaway</p>
                     <p className="mt-3 text-sm leading-8 text-[var(--color-ink)] sm:text-base">{topic.takeaway}</p>
                   </div>
+
+                  {detailedMateriSections
+                    .filter((section) => section.title === topic.title)
+                    .map((section) => (
+                      <div key={section.title} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-5 py-5">
+                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]">Uraian Lengkap</p>
+                        <div className="mt-4 space-y-3">
+                          {section.intro.map((paragraph) => (
+                            <p key={paragraph} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-4 text-sm leading-7 text-[var(--color-soft-ink)]">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                 </div>
 
                 <div className="space-y-4">
@@ -139,6 +155,22 @@ export default function MateriPage() {
                       </div>
                     </div>
                   ))}
+
+                  {detailedMateriSections
+                    .filter((section) => section.title === topic.title)
+                    .flatMap((section) => section.subsections)
+                    .map((subsection) => (
+                      <div key={`${topic.id}-${subsection.title}`} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-5 py-5">
+                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]">{subsection.title}</p>
+                        <div className="mt-4 space-y-3">
+                          {subsection.paragraphs.map((paragraph) => (
+                            <div key={paragraph} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-4">
+                              <p className="text-sm leading-7 text-[var(--color-soft-ink)]">{paragraph}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             </article>

@@ -1,4 +1,5 @@
 import {
+  extractDetailedMateriSections,
   extractEssayQuestions,
   extractImportantTerms,
   extractMultipleChoiceQuestions,
@@ -10,6 +11,7 @@ const materiMarkdown = readProjectMarkdown("materi.md");
 const latihanMarkdown = readProjectMarkdown("latihan.md");
 
 export const materiSections = extractSections(materiMarkdown);
+export const detailedMateriSections = extractDetailedMateriSections(materiMarkdown);
 export const keyTerms = extractImportantTerms(materiMarkdown);
 export const multipleChoiceQuestions = extractMultipleChoiceQuestions(latihanMarkdown);
 export const essayQuestions = extractEssayQuestions(latihanMarkdown);
