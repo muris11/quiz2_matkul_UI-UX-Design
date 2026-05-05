@@ -1,5 +1,5 @@
 import { SiteShell } from "@/components/site-shell";
-import { essayQuestions, multipleChoiceQuestions } from "@/lib/site-data";
+import { essayAnswers, essayQuestions, multipleChoiceQuestions } from "@/lib/site-data";
 
 export default function LatihanPage() {
   return (
@@ -36,12 +36,23 @@ export default function LatihanPage() {
         <section className="mt-12">
           <h2 className="text-2xl font-semibold">Essay</h2>
           <div className="mt-6 grid gap-5">
-            {essayQuestions.map((question) => (
-              <article key={question.number} className="rounded-[1.5rem] border border-[var(--color-line)] bg-[var(--color-panel)] p-5">
-                <p className="text-sm font-semibold text-[var(--color-accent)]">Essay {question.number}</p>
-                <p className="mt-3 text-base leading-8 text-[var(--color-soft-ink)]">{question.prompt}</p>
-              </article>
-            ))}
+            {essayQuestions.map((question) => {
+              const matchingAnswer = essayAnswers.find((item) => item.number === question.number);
+
+              return (
+                <article key={question.number} className="rounded-[1.5rem] border border-[var(--color-line)] bg-[var(--color-panel)] p-5">
+                  <p className="text-sm font-semibold text-[var(--color-accent)]">Essay {question.number}</p>
+                  <p className="mt-3 text-base leading-8 text-[var(--color-soft-ink)]">{question.prompt}</p>
+
+                  {matchingAnswer ? (
+                    <div className="mt-5 rounded-[1.25rem] border border-[var(--color-line)] bg-slate-950/20 p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-muted)]">Contoh Jawaban</p>
+                      <p className="mt-3 text-sm leading-8 text-[var(--color-soft-ink)]">{matchingAnswer.answer}</p>
+                    </div>
+                  ) : null}
+                </article>
+              );
+            })}
           </div>
         </section>
       </section>

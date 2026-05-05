@@ -1,5 +1,5 @@
 import { SiteShell } from "@/components/site-shell";
-import { keyTerms, materiSections } from "@/lib/site-data";
+import { keyTerms, materiRelationship, materiTopics } from "@/lib/site-data";
 
 export default function RingkasanPage() {
   return (
@@ -17,11 +17,11 @@ export default function RingkasanPage() {
           <article className="rounded-[1.75rem] border border-[var(--color-line)] bg-[var(--color-panel)] p-6">
             <h2 className="text-2xl font-semibold">Alur pembelajaran</h2>
             <div className="mt-5 space-y-4">
-              {materiSections.slice(1, 7).map((section) => (
+              {materiTopics.slice(0, 6).map((section, index) => (
                 <div key={section.title} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] p-4">
                   <h3 className="text-lg font-medium">{section.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-[var(--color-soft-ink)]">
-                    {section.content.split("\n").slice(1, 5).join(" ").slice(0, 180)}...
+                    {materiRelationship[index] ?? section.intro.join(" ").slice(0, 180)}
                   </p>
                 </div>
               ))}

@@ -13,6 +13,11 @@ export type EssayQuestion = {
   prompt: string;
 };
 
+export type EssayAnswer = {
+  number: number;
+  answer: string;
+};
+
 export type MateriSubsection = {
   title: string;
   paragraphs: string[];
@@ -172,4 +177,15 @@ export function extractEssayQuestions(markdown: string) {
     number: Number(match[1]),
     prompt: match[2].trim(),
   })) as EssayQuestion[];
+}
+
+export function extractEssayAnswers(markdown: string) {
+  const answerBlock = markdown.match(/# Contoh Jawaban Essay([\s\S]*?)\n\[1\]:/);
+
+  if (!answerBlock) return [];
+
+  return Array.from(answerBlock[1].matchAll(/\*\*(4[1-5])\.\s([\s\S]*?)\*\*/g)).map((match) => ({
+    number: Number(match[1]),
+    answer: match[2].trim(),
+  })) as EssayAnswer[];
 }

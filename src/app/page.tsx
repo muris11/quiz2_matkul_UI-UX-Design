@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import { SiteShell } from "@/components/site-shell";
-import { highlights, keyTerms, materiSections, multipleChoiceQuestions } from "@/lib/site-data";
+import { highlights, keyTerms, materiTopics, multipleChoiceQuestions } from "@/lib/site-data";
 
-const featuredSections = materiSections.filter(
+const featuredSections = materiTopics.filter(
   (section) =>
     section.title.includes("Praktikum 8") ||
     section.title.includes("Praktikum 9") ||
@@ -76,11 +76,7 @@ export default function HomePage() {
             <article key={section.title} className="rounded-[1.75rem] border border-[var(--color-line)] bg-[var(--color-panel)] p-6">
               <h3 className="text-xl font-semibold">{section.title}</h3>
               <p className="mt-4 text-sm leading-7 text-[var(--color-soft-ink)]">
-                {section.content
-                  .split("\n")
-                  .filter((line) => !line.startsWith("#"))
-                  .join(" ")
-                  .slice(0, 240)}
+                {section.intro.join(" ").slice(0, 240)}
                 ...
               </p>
             </article>

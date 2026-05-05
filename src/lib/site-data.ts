@@ -1,20 +1,18 @@
 import {
-  extractDetailedMateriSections,
+  extractEssayAnswers,
   extractEssayQuestions,
   extractImportantTerms,
   extractMultipleChoiceQuestions,
-  extractSections,
   readProjectMarkdown,
 } from "@/lib/content";
 
 const materiMarkdown = readProjectMarkdown("materi.md");
 const latihanMarkdown = readProjectMarkdown("latihan.md");
 
-export const materiSections = extractSections(materiMarkdown);
-export const detailedMateriSections = extractDetailedMateriSections(materiMarkdown);
 export const keyTerms = extractImportantTerms(materiMarkdown);
 export const multipleChoiceQuestions = extractMultipleChoiceQuestions(latihanMarkdown);
 export const essayQuestions = extractEssayQuestions(latihanMarkdown);
+export const essayAnswers = extractEssayAnswers(latihanMarkdown);
 
 export const highlights = [
   {
@@ -34,268 +32,436 @@ export const highlights = [
   },
 ];
 
+export type MateriBlock = {
+  title: string;
+  paragraphs?: string[];
+  bullets?: string[];
+};
+
 export type MateriTopic = {
   id: string;
   title: string;
-  focus: string;
-  summary: string;
-  objective?: string;
-  points: string[];
-  details?: {
-    title: string;
-    items: string[];
-  }[];
-  tools?: string[];
+  intro: string[];
+  blocks: MateriBlock[];
   takeaway: string;
 };
 
 export const materiOverview = {
   title: "Ringkasan Super Lengkap Materi UI/UX Design Praktikum 8-12",
   description:
-    "Materi ini membahas alur pembuatan desain antarmuka di Figma secara bertahap, mulai dari menyusun landing page sampai membangun sistem variable, tokens, dan light/dark mode. Fokus utamanya bukan hanya tampilan yang bagus, tetapi struktur yang jelas, pengalaman pengguna yang rapi, dan konsistensi desain yang siap dikembangkan.",
+    "Materi UI/UX Design dari Praktikum 8 sampai Praktikum 12 membahas proses pembuatan desain antarmuka menggunakan Figma secara bertahap. Alurnya dimulai dari membuat landing page, mengatur scrolling, menambahkan animasi dan interaksi, membuat component reusable, sampai menggunakan variable, colors, tokens, dan mode Light/Dark agar desain lebih konsisten dan mudah dikembangkan.",
   outcomes: [
-    "Memahami struktur landing page yang conversion-oriented dan mudah dipahami pengguna.",
-    "Menyusun scrolling page yang nyaman dilihat dari atas ke bawah.",
-    "Menerapkan animasi, interaksi, dan prototype flow yang lebih realistis.",
-    "Membangun component reusable agar desain konsisten dan efisien.",
-    "Menyusun design tokens dan modes untuk Light Mode dan Dark Mode.",
+    "Memahami alur pembuatan landing page yang conversion-oriented dan terstruktur.",
+    "Menyusun halaman panjang berbasis scrolling yang nyaman dibaca dari atas ke bawah.",
+    "Membangun prototype interaktif dengan trigger, action, destination, dan transition.",
+    "Menerapkan component reusable, variants, dan interactive component pada desain Figma.",
+    "Menyusun variable, colors, tokens, dan modes untuk Light Mode dan Dark Mode.",
   ],
 };
 
-export const curatedMateriTopics: MateriTopic[] = [
+export const materiTopics: MateriTopic[] = [
   {
     id: "praktikum-8",
     title: "Praktikum 8 — Desain Landing Page",
-    focus: "Menyusun halaman promosi yang fokus pada satu tujuan utama.",
-    summary:
-      "Landing page adalah halaman yang dirancang untuk mendorong satu aksi spesifik seperti daftar, beli, atau coba gratis. Karena tujuannya tunggal, isi, visual, dan CTA harus mendukung konversi secara langsung tanpa distraksi yang tidak perlu.",
-    objective:
-      "Mahasiswa diharapkan memahami workflow desain landing page, menyusun user flow dan struktur halaman, menerapkan user-centered design, grid system, style, component, dan auto layout untuk menghasilkan halaman yang rapi dan punya hierarki visual jelas.",
-    points: [
-      "Struktur inti biasanya terdiri dari hero section, call to action, social proof, benefits, features, dan repeated CTA.",
-      "Visual hierarchy harus jelas: judul utama paling menonjol, lalu deskripsi, visual pendukung, dan tombol aksi.",
-      "Navigasi sebaiknya sederhana dan tidak mengalihkan fokus pengguna dari tujuan utama halaman.",
-      "Desain harus tetap konsisten dalam warna, tipografi, icon, dan pola layout agar terasa profesional.",
+    intro: [
+      "Landing page adalah halaman web yang dibuat untuk tujuan tertentu seperti promosi produk, memperkenalkan layanan, mengumpulkan data pengguna, mendorong pendaftaran, atau meningkatkan penjualan.",
+      "Berbeda dengan halaman website biasa, landing page biasanya fokus pada satu tujuan utama sehingga isi, desain, dan tombol aksi dibuat lebih terarah.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Struktur landing page",
-        items: [
-          "Hero atau summary section menjadi kesan pertama dan harus langsung menjelaskan nilai utama produk.",
-          "CTA perlu ditempatkan di beberapa titik agar pengguna mudah mengambil aksi saat sudah yakin.",
-          "Social proof seperti testimoni, rating, review, atau logo partner meningkatkan kepercayaan pengguna.",
-          "Benefits lebih menekankan keuntungan untuk pengguna, sedangkan features menjelaskan kemampuan produk atau layanan.",
+        title: "Pengertian Landing Page",
+        paragraphs: [
+          "Dalam Praktikum 8, landing page dijelaskan sebagai halaman yang sederhana, persuasif, dan memiliki fokus pada satu aksi utama atau call to action.",
+          "Kalau landing page dibuat untuk aplikasi, fokusnya bisa mengajak pengguna untuk daftar. Kalau dibuat untuk produk, fokusnya bisa mengajak pengguna membeli. Kalau dibuat untuk layanan, fokusnya bisa mengajak pengguna mencoba layanan tersebut.",
         ],
       },
       {
-        title: "Tools Figma yang dipakai",
-        items: [
-          "Frame dipakai sebagai area kerja utama untuk halaman, section, atau komponen.",
-          "Grid 12 kolom membantu layout web tetap seimbang dan fleksibel.",
-          "Text style dan color style menjaga konsistensi tipografi serta warna di seluruh desain.",
-          "Auto layout membantu elemen menyesuaikan isi, padding, dan ukuran dengan lebih responsif.",
+        title: "Tujuan Praktikum 8",
+        paragraphs: [
+          "Setelah mempelajari praktikum ini, mahasiswa diharapkan mampu memahami workflow desain landing page, menyusun user flow dan struktur halaman, menerapkan user-centered design, menggunakan grid system, menggunakan style, component, auto layout, serta menghasilkan landing page yang rapi, menarik, dan punya hierarki visual yang jelas.",
+          "Inti tujuannya bukan hanya bisa membuat desain halaman, tetapi juga bisa membuat halaman yang terstruktur dan mudah dipahami pengguna.",
+        ],
+      },
+      {
+        title: "Struktur Landing Page",
+        bullets: [
+          "Summary / Hero Section: bagian paling atas halaman yang berisi judul utama, deskripsi singkat, visual pendukung, dan tombol CTA.",
+          "Call to Action / CTA: tombol atau ajakan seperti Daftar Sekarang, Coba Gratis, Mulai Sekarang, atau Beli Sekarang.",
+          "Social Proof: bukti kepercayaan seperti testimoni, rating, jumlah pengguna, logo partner, review, atau pencapaian.",
+          "Benefits: menjelaskan manfaat yang akan diterima pengguna, bukan sekadar fitur teknis.",
+          "Features: menjelaskan fitur utama produk atau layanan dalam bentuk card, icon, atau poin ringkas.",
+          "Repeated CTA: CTA yang diulang di beberapa bagian agar pengguna tetap diarahkan melakukan aksi utama.",
+        ],
+      },
+      {
+        title: "Prinsip Desain Landing Page",
+        bullets: [
+          "Conversion-Oriented: semua elemen harus mendukung tujuan utama halaman dan tidak mengganggu fokus pengguna.",
+          "Hierarki Visual yang Jelas: informasi disusun berdasarkan prioritas dari judul utama, subjudul, isi, gambar, hingga tombol aksi.",
+          "Konsistensi Desain: warna, font, ukuran teks, tombol, icon, dan layout harus konsisten.",
+          "Navigasi Sederhana: pengguna harus langsung memahami arah halaman tanpa navigasi yang terlalu rumit.",
+          "Responsive Design: desain harus nyaman dipakai di desktop, tablet, dan mobile.",
+        ],
+      },
+      {
+        title: "Tools dan Fitur Figma yang Dipakai",
+        bullets: [
+          "Frame: area kerja utama untuk membuat halaman, layar aplikasi, section, atau komponen.",
+          "Grid System: membantu menyusun layout agar rapi dan seimbang; untuk web biasanya memakai 12 kolom.",
+          "Text Style: menjaga konsistensi heading, subheading, body text, label, dan button text.",
+          "Color Style: menyimpan warna utama, sekunder, background, text, dan status agar mudah dipakai ulang.",
+          "Component: dipakai untuk elemen yang berulang seperti button, card, navbar, footer, form, dan icon.",
+          "Icon: membantu memperjelas fungsi dan memudahkan pemahaman tampilan.",
+          "Auto Layout: membuat desain lebih fleksibel dengan perilaku seperti hug contents, fill container, dan fixed width/height.",
+          "Group dan Alignment: membantu pengelompokan elemen dan perapihan posisi.",
+          "Image dan Effects: gambar, shadow, blur, overlay, dan gradient dipakai untuk memperkuat visual tanpa mengorbankan keterbacaan.",
         ],
       },
     ],
-    tools: ["Frame", "Grid system 12 kolom", "Text style", "Color style", "Component", "Auto layout"],
-    takeaway: "Landing page yang baik itu terarah, persuasif, dan membuat pengguna cepat paham harus melakukan apa.",
+    takeaway:
+      "Praktikum 8 mengajarkan bahwa landing page yang baik bukan hanya terlihat bagus, tetapi juga harus punya tujuan jelas, alur informasi yang rapi, CTA yang kuat, visual hierarchy yang mudah dipahami, dan desain yang konsisten.",
   },
   {
     id: "praktikum-9",
     title: "Praktikum 9 — Scrolling",
-    focus: "Mengatur konten panjang agar nyaman dibaca dan diikuti secara bertahap.",
-    summary:
-      "Scrolling UI menyusun informasi secara vertikal sehingga pengguna cukup menggulir layar untuk mengikuti alur konten. Pola ini cocok untuk landing page panjang, katalog, feed, dan mobile interface yang mengutamakan alur top-to-bottom.",
-    objective:
-      "Tujuan praktikum ini adalah memahami workflow desain landing page berbasis scrolling, menyusun user flow vertikal, membuat section yang runtut, serta menerapkan grid, style, component, dan auto layout pada halaman panjang.",
-    points: [
-      "Informasi paling penting ditempatkan di atas, lalu bagian pendukung menyusul ke bawah secara bertahap.",
-      "Horizontal scrolling cocok untuk carousel dan kategori, sedangkan vertical scrolling cocok untuk halaman panjang.",
-      "Overflow scrolling hanya bekerja dengan benar pada frame, bukan group.",
-      "Clip content, fixed position, dan preserve scroll position membantu pengalaman scroll terasa lebih realistis saat prototype diuji.",
+    intro: [
+      "Scrolling UI adalah pendekatan desain antarmuka yang menyusun konten secara vertikal sehingga pengguna dapat mengakses informasi dengan menggulir layar dari atas ke bawah.",
+      "Pendekatan ini banyak digunakan pada aplikasi mobile, landing page panjang, katalog produk, feed berita, halaman profil, dan halaman detail produk.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Konsep utama scrolling",
-        items: [
-          "Scrolling UI menyampaikan informasi secara bertahap dari atas ke bawah sehingga pengguna tidak harus pindah halaman terus-menerus.",
-          "Contoh urutan yang baik adalah search bar, kategori, carousel, lalu filter tanggal karena mengikuti prioritas interaksi pengguna.",
-          "Prinsip top-to-bottom hierarchy membuat konten utama muncul lebih dulu sebelum detail pendukung.",
+        title: "Tujuan Praktikum 9",
+        paragraphs: [
+          "Tujuan praktikum ini adalah agar mahasiswa mampu memahami workflow desain landing page berbasis scrolling, menyusun user flow vertikal, membuat struktur section seperti hero, fitur, testimoni, dan CTA, menerapkan grid system, menggunakan style, component, auto layout, serta menghasilkan landing page scrolling yang rapi dan punya alur visual dari atas ke bawah.",
         ],
       },
       {
-        title: "Hal penting saat membuat scrolling",
-        items: [
-          "Konten harus benar-benar overflow agar efek scrolling terasa relevan.",
-          "Gunakan frame, bukan group, karena overflow behavior hanya bekerja pada frame.",
-          "Jika halaman terlalu panjang, perlu penanda visual, jarak yang nyaman, dan grouping yang rapi agar pengguna tidak lelah membaca.",
+        title: "Konsep Utama Scrolling UI",
+        paragraphs: [
+          "Scrolling UI digunakan untuk menyampaikan informasi secara bertahap. Bagian paling atas biasanya berisi informasi paling penting, lalu semakin ke bawah berisi detail pendukung.",
+          "Contohnya, tampilan aplikasi hotel memiliki urutan search bar, browse by category, horizontal scrolling atau carousel, lalu filter by dates. Ini menunjukkan prinsip top-to-bottom hierarchy.",
+        ],
+      },
+      {
+        title: "Jenis Scrolling di Figma",
+        bullets: [
+          "Horizontal Scrolling: untuk carousel, card kategori, galeri gambar, slider produk, atau konten yang digeser ke samping.",
+          "Vertical Scrolling: untuk halaman panjang seperti landing page, feed, detail produk, atau mobile screen.",
+          "Horizontal dan Vertical Scrolling: untuk konten yang perlu digeser ke berbagai arah seperti peta, diagram besar, atau visualisasi data.",
+        ],
+      },
+      {
+        title: "Hal Penting Saat Membuat Scrolling",
+        bullets: [
+          "Konten harus overflow agar scrolling benar-benar terasa dan aktif.",
+          "Gunakan frame, bukan group, karena overflow hanya didukung oleh frame.",
+          "Clip Content dipakai untuk menyembunyikan konten yang keluar dari batas frame.",
+          "Fixed Position Saat Scrolling berguna untuk header, navbar, atau sidebar yang tetap diam.",
+          "Preserve Scroll Position menjaga posisi gulir tetap sama saat pindah antar frame.",
+        ],
+      },
+      {
+        title: "Tantangan Scrolling UI",
+        paragraphs: [
+          "Jika halaman terlalu panjang, pengguna bisa merasa lelah atau melewatkan informasi penting. Karena itu, section harus disusun rapi, jarak antar elemen harus nyaman, dan setiap bagian perlu punya penanda visual yang jelas.",
         ],
       },
     ],
-    tools: ["Overflow scrolling", "Clip content", "Fixed position", "Preserve scroll position"],
-    takeaway: "Scrolling yang rapi membuat pengguna tidak capek dan tetap paham urutan informasi dari awal sampai akhir.",
+    takeaway:
+      "Praktikum 9 mengajarkan cara membuat desain halaman panjang yang tetap nyaman digunakan, sehingga pengguna bisa memahami alur dari atas ke bawah tanpa bingung.",
   },
   {
     id: "praktikum-10",
     title: "Praktikum 10 — Animasi dan Interaksi",
-    focus: "Membuat prototype terasa hidup dan mudah diuji alurnya.",
-    summary:
-      "Animasi dan interaksi digunakan untuk memperjelas perpindahan, status, dan arah flow pengguna. Tujuannya bukan sekadar dekorasi, tetapi membantu prototype terasa natural saat tombol ditekan, halaman dibuka, atau elemen berubah state.",
-    objective:
-      "Tujuan Praktikum 10 adalah agar mahasiswa mampu menerapkan hover, scroll effect, transition, dan microinteraction dalam prototype yang tetap berpijak pada user flow dan user-centered design.",
-    points: [
-      "Interaction details terdiri dari trigger, action, destination, dan animation.",
-      "Transisi seperti Instant, Dissolve, Smart Animate, Push, dan Slide In dipilih sesuai konteks perpindahan.",
-      "Direction, easing, dan duration memengaruhi kenyamanan interaksi. Durasi sekitar 300ms sering dipakai agar tetap cepat tapi halus.",
-      "Section membantu tombol back bekerja lebih akurat karena flow dapat mengenali asal frame pengguna.",
+    intro: [
+      "Animasi dan interaksi digunakan untuk membuat prototype terasa lebih nyata. Dengan animasi, perpindahan antar halaman tidak terasa kaku, dan dengan interaksi pengguna bisa mencoba alur aplikasi secara langsung.",
+      "Dalam UI/UX, animasi tidak boleh hanya menjadi hiasan. Animasi harus membantu pengguna memahami perubahan, arah perpindahan, dan status elemen.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Perencanaan prototype",
-        items: [
-          "Sebelum membuat prototype, desainer harus memahami target audiens, tujuan flow, dan fitur utama yang ingin diuji.",
-          "Prototype perlu diuji dan diperbaiki berdasarkan feedback agar benar-benar membantu validasi alur produk.",
+        title: "Tujuan Praktikum 10",
+        paragraphs: [
+          "Tujuan Praktikum 10 adalah agar mahasiswa mampu memahami workflow landing page scrolling dengan animasi dan interaksi, menyusun user flow vertikal, menerapkan user-centered design, menggunakan grid, style, component, auto layout, serta menerapkan hover, scroll effect, transition, dan microinteraction.",
         ],
       },
       {
-        title: "Contoh interaksi yang dipelajari",
-        items: [
-          "Dari landing page, pengguna bisa masuk ke search, city details, atau booking page melalui tombol dan elemen visual tertentu.",
-          "Di search page, hasil pencarian dapat membawa pengguna ke city details dan tombol kembali perlu mengembalikan ke halaman sebelumnya.",
-          "Animasi dipakai untuk memperhalus perpindahan, bukan sekadar membuat tampilan ramai.",
+        title: "Merencanakan Prototype yang Efektif",
+        bullets: [
+          "Kenali Target Audiens: desain harus sesuai kebutuhan, kebiasaan, dan karakter pengguna.",
+          "Tentukan Tujuan Prototype: desainer perlu tahu fitur utama apa yang ingin diuji dan alur apa yang ingin ditampilkan.",
+          "Buat User Flow: menggambarkan langkah pengguna dari awal sampai mencapai tujuan.",
+          "Uji dan Kumpulkan Feedback: membantu menemukan kelemahan desain.",
+          "Perbaiki Prototype: feedback dipakai untuk menyempurnakan desain agar lebih sesuai kebutuhan pengguna.",
+        ],
+      },
+      {
+        title: "Flow Starting Point",
+        paragraphs: [
+          "Flow starting point adalah titik awal dari prototype. Dalam Figma, desainer dapat memilih frame pertama sebagai awal alur, misalnya Book Trip Flow.",
+        ],
+      },
+      {
+        title: "Interaction Details",
+        bullets: [
+          "Trigger: pemicu interaksi seperti On Click, On Drag, Hover, atau Mouse Enter.",
+          "Action: aksi yang terjadi setelah interaksi, misalnya Navigate To, Scroll To, Open Overlay, atau Change To.",
+          "Destination: tujuan akhir interaksi, biasanya berupa frame lain.",
+          "Animation: mengatur efek perpindahan, arah, easing, dan durasi.",
+        ],
+      },
+      {
+        title: "Jenis Transisi",
+        bullets: [
+          "Instant: perpindahan langsung tanpa animasi.",
+          "Dissolve: frame tujuan muncul perlahan di atas frame sebelumnya.",
+          "Smart Animate: Figma mencocokkan layer yang sama lalu menganimasikannya.",
+          "Move In / Move Out: frame masuk atau keluar dari arah tertentu.",
+          "Push: frame baru mendorong frame lama.",
+          "Slide In / Slide Out: frame bergerak masuk atau keluar secara halus.",
+        ],
+      },
+      {
+        title: "Pengaturan Animasi",
+        bullets: [
+          "Direction: menentukan arah animasi seperti kiri, kanan, atas, atau bawah.",
+          "Easing: mengatur percepatan dan perlambatan animasi seperti Ease In, Ease Out, atau Ease In and Out.",
+          "Duration: mengatur durasi animasi, dan 300ms sering dipakai agar cepat tapi tetap halus.",
+        ],
+      },
+      {
+        title: "Contoh Interaksi pada Aplikasi Perjalanan",
+        bullets: [
+          "Dari Landing Page: klik search bar ke Search, klik gambar wisata ke City Details, klik Book Now ke Booking.",
+          "Dari Search Page: klik tombol kembali ke Landing Page dan klik hasil pencarian ke City Details.",
+          "Dari City Details: klik tombol kembali ke halaman sebelumnya dan klik Book ke Booking.",
+          "Dari Booking Page: klik tombol kembali ke halaman sebelumnya dan klik View Details ke City Details.",
+        ],
+      },
+      {
+        title: "Penggunaan Sections",
+        paragraphs: [
+          "Sections digunakan untuk mengelompokkan beberapa frame agar prototype lebih intuitif. Dengan Section, Figma bisa memahami pengguna datang dari halaman mana lalu mengembalikannya ke halaman yang tepat.",
         ],
       },
     ],
-    tools: ["Flow starting point", "Navigate to", "Open overlay", "Smart animate", "Sections"],
-    takeaway: "Prototype yang efektif membuat orang paham alur produk bahkan sebelum aplikasi benar-benar dibangun.",
+    takeaway:
+      "Praktikum 10 mengajarkan bahwa prototype yang baik harus interaktif, realistis, mudah diuji, dan bisa menjelaskan alur aplikasi dengan jelas.",
   },
   {
     id: "praktikum-11",
-    title: "Praktikum 11 — Component pada Figma",
-    focus: "Membuat elemen reusable agar desain lebih cepat, konsisten, dan mudah diubah.",
-    summary:
-      "Component adalah fondasi reusable design. Button, card, form, navbar, dan input sebaiknya tidak dibuat berulang secara manual karena perubahan kecil akan memakan waktu jika semuanya berdiri sendiri.",
-    objective:
-      "Tujuan praktikum ini adalah memahami reusable design, membuat dan mengelola component seperti button, card, dan form, memahami variants, dan menerapkannya secara terstruktur dalam interface.",
-    points: [
-      "Main component menjadi sumber perubahan, sedangkan instance tetap terhubung dan ikut ter-update otomatis.",
-      "Variants dipakai untuk mengelompokkan state seperti default, hover, pressed, disabled, atau size yang berbeda.",
-      "Interactive component membantu interaksi prototype dipasang satu kali di component set, bukan berulang di setiap screen.",
-      "Dengan component, design system menjadi lebih konsisten dan scalable untuk project besar.",
+    title: "Praktikum 11 — Desain Component pada Figma",
+    intro: [
+      "Component adalah elemen desain yang bisa digunakan berulang kali seperti tombol, card, form, input, navbar, header, footer, icon, dan elemen UI lainnya.",
+      "Dengan component, desain menjadi lebih konsisten karena elemen yang sama tidak perlu dibuat ulang dari awal.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Kenapa component penting",
-        items: [
-          "Kalau tombol atau card dibuat satu per satu sebagai group biasa, semua perubahan harus diedit manual dan rawan tidak konsisten.",
-          "Dengan component, perubahan cukup dilakukan pada main component lalu seluruh instance ikut menyesuaikan.",
+        title: "Tujuan Praktikum 11",
+        paragraphs: [
+          "Tujuan praktikum ini adalah agar mahasiswa memahami konsep component dan reusable design, mampu membuat dan mengelola component seperti button, card, dan form, memahami penggunaan variants, menerapkan prinsip desain UI yang konsisten, serta mengimplementasikan component dalam desain interface secara terstruktur.",
         ],
       },
       {
-        title: "Cara membuat component",
-        items: [
-          "Mulai dari membuat elemen seperti tombol, gabungkan shape dan text, lalu ubah menjadi component utama.",
-          "Beri nama yang jelas seperti Primary Button lalu gunakan lewat Assets atau instance di halaman lain.",
-          "Variants mengelompokkan variasi seperti default, hover, pressed, disabled, atau dark mode dalam satu component set.",
+        title: "Prototyping",
+        paragraphs: [
+          "Materi Praktikum 11 juga menjelaskan kembali tentang prototyping, yaitu proses membuat simulasi alur aplikasi sebelum aplikasi dikembangkan oleh developer.",
+          "Ada dua metode prototyping: Paper Prototyping dan Digital Prototyping menggunakan tools seperti Figma, Adobe XD, Invision, dan Zeplin.",
+        ],
+      },
+      {
+        title: "Interaksi pada Tombol",
+        bullets: [
+          "Tombol Login diarahkan ke Login Page.",
+          "Tombol Daftar diarahkan ke Sign Up Page.",
+          "Tombol Back perlu ditambahkan agar pengguna bisa kembali ke halaman sebelumnya.",
+          "Jika ada frame yang tidak bisa ditampilkan karena belum ada alurnya, flow harus diperbaiki terlebih dahulu.",
+        ],
+      },
+      {
+        title: "Kenapa Harus Menggunakan Component",
+        paragraphs: [
+          "Kalau tombol dibuat satu per satu sebagai group biasa, maka ketika ingin mengganti warna, bentuk, atau ukuran tombol, semua tombol harus diedit manual.",
+          "Dengan component, cukup ubah main component, maka semua instance yang menggunakan component tersebut akan ikut berubah.",
+        ],
+      },
+      {
+        title: "Cara Membuat Component",
+        bullets: [
+          "Buat elemen desain, misalnya tombol.",
+          "Gabungkan bentuk tombol dan teks.",
+          "Klik Create Component.",
+          "Beri nama component, misalnya Primary Button.",
+          "Gunakan component dari panel Assets atau dengan copy-paste instance.",
+          "Jika perlu perubahan, ubah pada component utama agar semua instance ikut menyesuaikan.",
+        ],
+      },
+      {
+        title: "Variants dan Interactive Component",
+        paragraphs: [
+          "Variants digunakan untuk mengelompokkan beberapa variasi component dalam satu component set, misalnya default, hover, pressed, disabled, small, medium, large, light mode, dan dark mode.",
+          "Interactive components memungkinkan interaksi prototype dibuat langsung di dalam component set sehingga tidak perlu membuat koneksi berulang di setiap screen.",
         ],
       },
     ],
-    tools: ["Create component", "Instance", "Variants", "Interactive components"],
-    takeaway: "Semakin besar project, semakin penting component untuk menjaga kecepatan kerja dan konsistensi visual.",
+    takeaway:
+      "Praktikum 11 mengajarkan bahwa component sangat penting karena membuat desain lebih cepat, konsisten, reusable, dan mudah diperbarui.",
   },
   {
     id: "praktikum-12",
     title: "Praktikum 12 — Variable pada Figma",
-    focus: "Menyimpan nilai desain secara terpusat agar perubahan lebih efisien dan sistematis.",
-    summary:
-      "Variable memungkinkan warna, spacing, sizing, dan nilai lain dipakai dari satu sumber pusat. Dengan pendekatan ini, desain jadi lebih mudah dikembangkan, dipelihara, dan dipakai lintas mode atau tema.",
-    objective:
-      "Tujuan Praktikum 12 adalah memahami konsep variable, membuat color, typography, spacing, dan sizing variable, lalu menerapkannya ke component dan layout agar desain lebih scalable.",
-    points: [
-      "Colors atau primitives menyimpan nilai dasar seperti HEX, misalnya Grey/50 atau Grey/900.",
-      "Tokens memberi nama semantik sesuai fungsi UI, misalnya Text/Primary, Background/Primary, atau Border/Primary.",
-      "Modes seperti Light dan Dark memungkinkan satu token memiliki nilai berbeda sesuai konteks tampilan.",
-      "Urutan kerjanya adalah HEX → Colors/Primitives → Tokens → UI Component.",
+    intro: [
+      "Variable pada Figma adalah sistem untuk menyimpan nilai desain secara terpusat, seperti warna, angka, ukuran, spacing, sizing, typography, dan nilai lain yang sering digunakan berulang.",
+      "Dengan variable, desainer tidak perlu mengubah nilai satu per satu secara manual di banyak elemen.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Manfaat variable",
-        items: [
-          "Konsistensi desain meningkat karena seluruh elemen memakai sumber nilai yang sama.",
-          "Perubahan jadi efisien karena cukup mengubah variable, bukan layer satu per satu.",
-          "Variable mendukung light mode dan dark mode tanpa perlu menduplikasi semua screen dari awal.",
+        title: "Tujuan Praktikum 12",
+        paragraphs: [
+          "Tujuan Praktikum 12 adalah agar mahasiswa memahami konsep variable, mampu membuat dan mengelola variable seperti color, typography, spacing, dan sizing, menerapkan variable dalam component dan layout, serta mengimplementasikan variable agar desain mudah dikembangkan, dipelihara, dan diskalakan.",
         ],
       },
       {
-        title: "Workflow variable",
-        items: [
-          "Mulai dari membuat koleksi warna dasar seperti Grey/50, Grey/100, Grey/900, Brand/Primary, dan Brand/Secondary.",
-          "Lanjutkan dengan membuat tokens fungsional seperti Text/Primary, Background/Primary, Border/Primary, dan Button/Text.",
-          "Tambahkan mode Light dan Dark agar token punya nilai berbeda sesuai konteks tampilan.",
-          "Hubungkan variable ke fill, stroke, border, dan component agar desain mengikuti sistem dengan konsisten.",
+        title: "Manfaat Variable",
+        bullets: [
+          "Konsistensi Desain: semua elemen menggunakan nilai yang sama dari satu sumber.",
+          "Efisiensi Perubahan: perubahan cukup dilakukan pada variable.",
+          "Mudah Dikembangkan: project besar lebih mudah dikelola.",
+          "Mendukung Light Mode dan Dark Mode.",
+          "Mendukung Design System yang lebih profesional.",
+        ],
+      },
+      {
+        title: "Variable untuk Light Mode dan Dark Mode",
+        paragraphs: [
+          "Dalam Praktikum 12, variable digunakan untuk membuat mode terang dan gelap agar desain lebih akomodatif terhadap kenyamanan visual pengguna.",
+        ],
+        bullets: [
+          "Light Mode memakai background terang dan teks gelap.",
+          "Dark Mode memakai background gelap dan teks terang.",
+        ],
+      },
+      {
+        title: "Langkah 1 — Membuat Variable Warna / Colors",
+        bullets: [
+          "Grey/50",
+          "Grey/100",
+          "Grey/200",
+          "Grey/900",
+          "Brand/Primary",
+          "Brand/Secondary",
+        ],
+      },
+      {
+        title: "Langkah 2 — Membuat Tokens",
+        bullets: [
+          "Text/Primary",
+          "Text/Secondary",
+          "Background/Primary",
+          "Background/Secondary",
+          "Border/Primary",
+          "Button/Primary",
+          "Button/Text",
+        ],
+      },
+      {
+        title: "Perbedaan Colors dan Tokens",
+        paragraphs: [
+          "Colors atau Primitives adalah warna dasar yang menyimpan nilai asli, misalnya Grey/900 = #111111.",
+          "Tokens adalah nama semantik berdasarkan fungsi, misalnya Text/Primary menggunakan Grey/900 pada Light Mode.",
+          "Alurnya adalah HEX → Colors/Primitives → Tokens → UI Component.",
+        ],
+      },
+      {
+        title: "Langkah 3 — Membuat Mode Light dan Dark",
+        bullets: [
+          "Text/Primary: Grey/900 pada Light Mode dan Grey/50 pada Dark Mode.",
+          "Background/Primary: Grey/50 pada Light Mode dan Grey/900 pada Dark Mode.",
+          "Border/Primary: Grey/200 pada Light Mode dan Grey/700 pada Dark Mode.",
+        ],
+      },
+      {
+        title: "Langkah 4 — Menghubungkan Variable ke Desain",
+        bullets: [
+          "Pilih layer atau component.",
+          "Buka panel warna seperti Fill atau Stroke.",
+          "Masuk ke Libraries.",
+          "Pilih token yang sesuai.",
+          "Terapkan token ke elemen desain.",
+          "Judul memakai Text/Primary, deskripsi memakai Text/Secondary, card memakai Background/Primary, border card memakai Border/Primary, dan tombol memakai Button/Primary.",
+        ],
+      },
+      {
+        title: "Langkah 5 — Mengganti Mode",
+        bullets: [
+          "Light",
+          "Dark",
+          "Auto",
         ],
       },
     ],
-    tools: ["Variables", "Collections", "Tokens", "Modes", "Libraries"],
-    takeaway: "Variable membuat desain lebih rapi, hemat waktu, dan siap berkembang menjadi design system yang matang.",
+    takeaway:
+      "Praktikum 12 mengajarkan bahwa variable membuat desain lebih rapi, fleksibel, dan mudah dikembangkan serta sangat penting untuk project besar.",
   },
   {
     id: "pertemuan-12",
     title: "Pertemuan 12 — Sistem Variable, Colors, Tokens, dan Workflow",
-    focus: "Memahami arsitektur design system berbasis variable secara menyeluruh.",
-    summary:
-      "Pada tahap ini, materi menekankan alasan kenapa desainer perlu beralih dari palet statis ke sistem variable yang lebih logis, akomodatif, dan efisien untuk skala project yang lebih besar.",
-    objective:
-      "Pertemuan 12 merangkum alasan, arsitektur, dan workflow penggunaan variable agar desainer tidak hanya tahu caranya, tetapi juga paham logika sistem di baliknya.",
-    points: [
-      "Lapis pertama berisi nilai absolut seperti HEX, lalu dinaikkan ke colors/primitives, lalu tokens semantic, dan akhirnya diterapkan ke UI component.",
-      "Token tidak sebaiknya langsung diisi HEX, melainkan ditautkan ke primitives agar sistem mudah diubah dari pusatnya.",
-      "Workflow yang dipakai adalah define warna, assign token, expand mode, lalu apply ke desain.",
-      "Pendekatan ini mendukung dark mode tanpa harus menduplikasi screen satu per satu.",
+    intro: [
+      "Pertemuan 12 menjelaskan bahwa variable membuat desain web lebih maju karena tidak lagi hanya menggunakan palet warna statis.",
+      "Variable membuat desain memiliki sistem logika yang terintegrasi dan lebih efisien untuk skala project yang besar.",
     ],
-    details: [
+    blocks: [
       {
-        title: "Mengapa beralih ke sistem variable",
-        items: [
-          "Desain menjadi lebih akomodatif terhadap preferensi visual seperti mode terang dan gelap.",
-          "Logika desain lebih terintegrasi karena perubahan warna dan gaya dapat dipusatkan dalam satu sistem.",
-          "Efisiensi skala meningkat karena desainer tidak perlu membuat banyak versi screen secara manual.",
+        title: "Mengapa Beralih ke Sistem Variable",
+        bullets: [
+          "Akomodatif: desain dapat menyesuaikan preferensi visual pengguna seperti mode terang atau gelap.",
+          "Logika Terintegrasi: seluruh gaya desain dapat dipusatkan dalam satu sistem.",
+          "Efisiensi Skala: desainer tidak perlu menduplikasi banyak screen hanya untuk versi dark mode.",
         ],
       },
       {
-        title: "Workflow recap",
-        items: [
-          "Define: simpan nilai HEX murni sebagai color primitives.",
-          "Assign: tautkan warna dasar ke token semantic seperti Text/Primary atau Background/Primary.",
-          "Expand: buat mode Light dan Dark dengan nilai token berbeda.",
-          "Apply: semua UI component memakai tokens, bukan HEX langsung.",
+        title: "Arsitektur Sistem Variable",
+        bullets: [
+          "Lapis 1 — Nilai Absolut: kode HEX seperti #F8F8F8 atau #111111.",
+          "Lapis 2 — Colors / Primitives: warna dasar seperti Grey/100, Grey/200, Grey/900.",
+          "Lapis 3 — Tokens / Semantic: fungsi warna seperti Text/Primary, Background/Primary, Border/Primary.",
+          "Lapis 4 — UI Component: component menggunakan token, bukan langsung memakai HEX.",
+        ],
+      },
+      {
+        title: "Workflow Recap",
+        bullets: [
+          "Define / Warna: simpan HEX murni sebagai Color Primitives.",
+          "Assign / Token: tautkan warna dasar ke fungsi UI spesifik seperti Text/Primary.",
+          "Expand / Mode: buat mode Light dan Dark dengan nilai token yang berbeda.",
+          "Apply / Desain: warnai UI component hanya menggunakan Tokens, bukan HEX langsung.",
         ],
       },
     ],
-    takeaway: "Design system yang baik bukan cuma soal warna, tapi soal logika yang membuat seluruh UI lebih mudah dirawat dan diskalakan.",
+    takeaway:
+      "Pertemuan 12 menegaskan bahwa design system yang baik bukan cuma soal warna, tetapi juga soal logika yang membuat seluruh UI lebih mudah dirawat dan diskalakan.",
   },
 ];
 
 export const materiRelationship = [
-  "Praktikum 8 membangun fondasi struktur landing page dan CTA.",
-  "Praktikum 9 mengatur bagaimana konten panjang disusun dan discroll dengan nyaman.",
-  "Praktikum 10 membuat flow prototype terasa interaktif dan realistis.",
-  "Praktikum 11 menyusun elemen reusable dengan component dan variants.",
-  "Praktikum 12 dan Pertemuan 12 mengubah desain menjadi sistem berbasis variable dan tokens.",
+  "Praktikum 8 membangun fondasi landing page yang terarah, punya CTA, social proof, benefits, features, grid, style, dan auto layout.",
+  "Praktikum 9 melatih pembuatan halaman panjang yang nyaman digulir dengan vertical scroll, horizontal scroll, clip content, fixed position, dan preserve scroll.",
+  "Praktikum 10 menambahkan animasi dan interaksi agar prototype interaktif dan realistis dengan trigger, action, destination, transition, easing, duration, dan sections.",
+  "Praktikum 11 memfokuskan reusable design melalui component, variants, dan alur prototype yang lebih mudah diuji.",
+  "Praktikum 12 dan Pertemuan 12 menyatukan semuanya ke dalam sistem variable, colors, tokens, modes, serta dukungan Light/Dark Mode.",
 ];
 
 export const materiApplicationExample = [
-  "Pada Praktikum 8, landing page e-commerce bisa berisi hero section, kategori produk, produk unggulan, testimoni, manfaat, fitur, dan CTA.",
-  "Pada Praktikum 9, halaman dibuat scrollable dari atas ke bawah, sementara kategori produk dapat ditampilkan sebagai horizontal carousel.",
-  "Pada Praktikum 10, tombol seperti 'Lihat Produk' bisa diarahkan ke halaman detail dengan animasi halus dan tombol back yang jelas.",
-  "Pada Praktikum 11, tombol, card produk, navbar, form login, dan form register dibuat sebagai component reusable.",
-  "Pada Praktikum 12, warna brand, background, teks, border, dan tombol dibuat sebagai variable dan token agar aplikasi mendukung Light Mode dan Dark Mode tanpa desain ulang dari nol.",
+  "Pada Praktikum 8, aplikasi e-commerce bisa punya hero section, kategori produk, produk unggulan, testimoni, manfaat, fitur, dan CTA.",
+  "Pada Praktikum 9, halaman dibuat bisa discroll dari atas ke bawah dan kategori produk bisa dibuat horizontal scroll seperti carousel.",
+  "Pada Praktikum 10, tombol 'Lihat Produk' diarahkan ke halaman detail produk dengan animasi yang halus dan tombol back yang jelas.",
+  "Pada Praktikum 11, tombol, card produk, navbar, form login, dan form register dibuat sebagai component agar mudah digunakan ulang.",
+  "Pada Praktikum 12, warna brand, background, teks, border, dan tombol dibuat sebagai variable dan token agar aplikasi mendukung Light Mode dan Dark Mode tanpa desain ulang.",
 ];
 
 export const materiConclusion = [
-  "Materi Praktikum 8 sampai 12 memberikan pemahaman lengkap tentang proses desain UI/UX menggunakan Figma dari tahap dasar sampai sistem desain yang lebih matang.",
-  "Tahap awal mengajarkan cara membuat landing page yang fokus pada tujuan dan konversi, lalu berkembang ke halaman panjang berbasis scrolling agar informasi bisa disampaikan bertahap.",
-  "Setelah itu, prototype dibuat lebih interaktif menggunakan animasi, trigger, action, destination, dan transition untuk menguji alur pengalaman pengguna.",
-  "Materi berikutnya memperkenalkan component agar elemen desain reusable, lebih konsisten, dan lebih mudah diperbarui di project besar.",
-  "Terakhir, variable, colors, tokens, dan modes membuat desain menjadi lebih sistematis, fleksibel, dan mendukung Light Mode serta Dark Mode secara efisien.",
+  "Materi Praktikum 8 sampai 12 memberikan pemahaman lengkap tentang proses desain UI/UX menggunakan Figma, dari tahap dasar sampai sistem desain yang lebih matang.",
+  "Tahap awal mengajarkan cara membuat landing page yang fokus pada tujuan dan konversi, lalu berkembang ke halaman panjang berbasis scrolling.",
+  "Setelah itu, desain dikembangkan menjadi prototype interaktif dengan animasi, trigger, action, destination, dan transition.",
+  "Materi berikutnya memperkenalkan component agar elemen desain reusable, konsisten, dan lebih mudah diperbarui.",
+  "Terakhir, variable, colors, tokens, dan modes membuat desain lebih sistematis, konsisten, fleksibel, dan mendukung Light Mode serta Dark Mode.",
 ];
