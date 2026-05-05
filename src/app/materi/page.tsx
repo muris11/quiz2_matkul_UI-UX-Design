@@ -99,8 +99,8 @@ export default function MateriPage() {
 
               {section.intro.length > 0 ? (
                 <div className="mt-6 space-y-3">
-                  {section.intro.map((paragraph) => (
-                    <div key={paragraph} className="rounded-[1.25rem] border border-[var(--color-line)] bg-slate-950/20 px-5 py-4">
+                  {section.intro.map((paragraph, paragraphIndex) => (
+                    <div key={`${section.title}-intro-${paragraphIndex}`} className="rounded-[1.25rem] border border-[var(--color-line)] bg-slate-950/20 px-5 py-4">
                       <p className="text-sm leading-8 text-[var(--color-soft-ink)] sm:text-base">{normalizeParagraph(paragraph)}</p>
                     </div>
                   ))}
@@ -112,13 +112,13 @@ export default function MateriPage() {
                   <section key={`${section.title}-${subsection.title}`} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] p-5">
                     <h3 className="text-lg font-semibold text-[var(--color-ink)]">{subsection.title}</h3>
                     <div className="mt-4 space-y-3">
-                      {subsection.paragraphs.map((paragraph) =>
+                      {subsection.paragraphs.map((paragraph, paragraphIndex) =>
                         isListLike(paragraph) ? (
-                          <div key={paragraph} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-4">
+                          <div key={`${section.title}-${subsection.title}-list-${paragraphIndex}`} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-4">
                             <p className="text-sm leading-7 text-[var(--color-soft-ink)]">{normalizeParagraph(paragraph)}</p>
                           </div>
                         ) : (
-                          <p key={paragraph} className="text-sm leading-8 text-[var(--color-soft-ink)] sm:text-base">
+                          <p key={`${section.title}-${subsection.title}-paragraph-${paragraphIndex}`} className="text-sm leading-8 text-[var(--color-soft-ink)] sm:text-base">
                             {paragraph}
                           </p>
                         ),
@@ -139,7 +139,7 @@ export default function MateriPage() {
             <h2 className="mt-3 text-2xl font-semibold">Implementasi materi dalam project UI/UX</h2>
             <div className="mt-5 space-y-3">
               {materiApplicationExample.map((item, index) => (
-                <div key={item} className="flex gap-4 rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-4 py-4">
+                <div key={`application-${index}`} className="flex gap-4 rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-4 py-4">
                   <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-line)] text-sm font-semibold text-[var(--color-accent)]">
                     {index + 1}
                   </span>
@@ -153,8 +153,8 @@ export default function MateriPage() {
             <p className="text-sm uppercase tracking-[0.24em] text-[var(--color-muted)]">Kesimpulan Materi</p>
             <h2 className="mt-3 text-2xl font-semibold">Inti besar yang perlu dibawa dari modul ini</h2>
             <div className="mt-5 space-y-3">
-              {materiConclusion.map((item) => (
-                <div key={item} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-4 py-4">
+              {materiConclusion.map((item, index) => (
+                <div key={`conclusion-${index}`} className="rounded-[1.25rem] border border-[var(--color-line)] bg-white/[0.03] px-4 py-4">
                   <p className="text-sm leading-7 text-[var(--color-soft-ink)]">{item}</p>
                 </div>
               ))}
